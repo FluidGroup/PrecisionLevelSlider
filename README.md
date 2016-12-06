@@ -6,4 +6,7 @@
   <img src="sample.png" width=375>
 </p>
 
+<p align="center">
+  <img src="sample.gif" width=375>
+</p>
 
