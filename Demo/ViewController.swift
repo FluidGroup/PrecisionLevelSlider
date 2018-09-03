@@ -25,15 +25,15 @@ class ViewController: UIViewController {
     // Do any additional setup after loading the view, typically from a nib.
 
     whiteSmall.isContinuous = false
-    whiteSmall.addTarget(self, action: #selector(whiteLargeValueChanged(slider:)), for: .valueChanged)
     
     let whiteLongColor = UIColor.black
     let whiteShortColor = UIColor(white: 0.2, alpha: 1)
 
     whiteLarge.longNotchColor = whiteLongColor
     whiteLarge.shortNotchColor = whiteShortColor
-
-
+    whiteLarge.notchCount = 100
+    whiteLarge.notchSpacing = 10
+    whiteLarge.addTarget(self, action: #selector(whiteLargeValueChanged(slider:)), for: .valueChanged)
 
     whiteMidium.longNotchColor = whiteLongColor
     whiteMidium.shortNotchColor = whiteShortColor
