@@ -45,7 +45,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   /// default 0.0. this value will be pinned to min/max
-  open dynamic var value: Float = 0 {
+  @objc open dynamic var value: Float = 0 {
     didSet {
 
       guard !scrollView.isDecelerating && !scrollView.isDragging else {
@@ -64,7 +64,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   /// default 0.0. the current value may change if outside new min value
-  open dynamic var minimumValue: Float = 0 {
+  @objc open dynamic var minimumValue: Float = 0 {
     didSet {
       let offset = valueToOffset(value: value)
 
@@ -78,7 +78,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   /// default 1.0. the current value may change if outside new max value
-  open dynamic var maximumValue: Float = 1 {
+  @objc open dynamic var maximumValue: Float = 1 {
     didSet {
       let offset = valueToOffset(value: value)
 
@@ -134,7 +134,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   open override var intrinsicContentSize: CGSize {
-    return CGSize(width: UIViewNoIntrinsicMetric, height: 50)
+    return CGSize(width: UIView.noIntrinsicMetric, height: 50)
   }
 
   func update() {
@@ -186,7 +186,7 @@ open class PrecisionLevelSlider: UIControl {
     scrollView.contentSize = contentSize
 
     let inset = contentSize.width / 2 + (max(0, scrollView.bounds.width - contentSize.width) / 2)
-    scrollView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset)
+    scrollView.contentInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
 
   }
 

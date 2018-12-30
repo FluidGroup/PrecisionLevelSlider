@@ -59,7 +59,7 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 
-  func whiteLargeValueChanged(slider: PrecisionLevelSlider) {
+  @objc func whiteLargeValueChanged(slider: PrecisionLevelSlider) {
     print(slider.value)
   }
 
