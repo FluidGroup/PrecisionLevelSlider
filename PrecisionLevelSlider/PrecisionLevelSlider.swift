@@ -54,11 +54,18 @@ open class PrecisionLevelSlider: UIControl {
 
       let offset = valueToOffset(value: value)
 
-      UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0,
+        usingSpringWithDamping: 1,
+        initialSpringVelocity: 0,
+        options: [.beginFromCurrentState, .allowUserInteraction],
+        animations: {
 
-        self.scrollView.setContentOffset(offset, animated: false)
+          self.scrollView.setContentOffset(offset, animated: false)
 
-      }) { (finish) in
+        }
+      ) { (finish) in
       }
     }
   }
@@ -68,11 +75,18 @@ open class PrecisionLevelSlider: UIControl {
     didSet {
       let offset = valueToOffset(value: value)
 
-      UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0,
+        usingSpringWithDamping: 1,
+        initialSpringVelocity: 0,
+        options: [.beginFromCurrentState, .allowUserInteraction],
+        animations: {
 
-        self.scrollView.setContentOffset(offset, animated: false)
+          self.scrollView.setContentOffset(offset, animated: false)
 
-      }) { (finish) in
+        }
+      ) { (finish) in
       }
     }
   }
@@ -82,15 +96,22 @@ open class PrecisionLevelSlider: UIControl {
     didSet {
       let offset = valueToOffset(value: value)
 
-      UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0,
+        usingSpringWithDamping: 1,
+        initialSpringVelocity: 0,
+        options: [.beginFromCurrentState, .allowUserInteraction],
+        animations: {
 
-        self.scrollView.setContentOffset(offset, animated: false)
+          self.scrollView.setContentOffset(offset, animated: false)
 
-      }) { (finish) in
+        }
+      ) { (finish) in
       }
     }
   }
-  
+
   open var isContinuous: Bool = true
 
   private let scrollView = UIScrollView()
@@ -105,14 +126,15 @@ open class PrecisionLevelSlider: UIControl {
   private let gradientLayer: CAGradientLayer = {
 
     let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
+    gradientLayer.colors = [
+      UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor,
+    ]
     gradientLayer.locations = [0, 0.4, 0.6, 1]
     gradientLayer.startPoint = CGPoint(x: 0, y: 0)
     gradientLayer.endPoint = CGPoint(x: 1, y: 0)
 
     return gradientLayer
   }()
-
 
   // MARK: - Initializers
 
@@ -162,7 +184,8 @@ open class PrecisionLevelSlider: UIControl {
           x: x,
           y: offsetY - (longNotchHeight / 2),
           width: notchWidth,
-          height: longNotchHeight)
+          height: longNotchHeight
+        )
 
       } else {
         l.backgroundColor = shortNotchColor.cgColor
@@ -170,7 +193,8 @@ open class PrecisionLevelSlider: UIControl {
           x: x,
           y: offsetY - (shortNotchHeight / 2),
           width: notchWidth,
-          height: shortNotchHeight)
+          height: shortNotchHeight
+        )
       }
     }
 
@@ -210,7 +234,8 @@ open class PrecisionLevelSlider: UIControl {
 
   fileprivate func offsetToValue() -> Float {
 
-    let progress = (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
+    let progress =
+      (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
     let actualProgress = Float(min(max(0, progress), 1))
     let value = ((maximumValue - minimumValue) * actualProgress) + minimumValue
 
@@ -251,7 +276,8 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
     }
   }
 
-  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
+  {
     if decelerate == false && isContinuous == false {
       value = offsetToValue()
       sendActions(for: .valueChanged)
