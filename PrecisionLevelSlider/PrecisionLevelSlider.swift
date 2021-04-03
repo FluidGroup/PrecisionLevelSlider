@@ -92,14 +92,23 @@ open class PrecisionLevelSlider: UIControl {
   }
   
   open var isContinuous: Bool = true
+    
+  open var notchCount: Int = 0 {
+    didSet {
+      addNotchLayers()
+        update()
+      }
+  }
+    
+  open var notchSpacing: CGFloat = 10.0 {
+    didSet {
+        update()
+    }
+  }
 
   private let scrollView = UIScrollView()
   private let contentView = UIView()
-  private let notchLayers: [CALayer] = {
-    return (0..<31).map { _ -> CALayer in
-      CALayer()
-    }
-  }()
+  private var notchLayers: [CALayer] = []
   private let centerNotchLayer = CALayer()
 
   private let gradientLayer: CAGradientLayer = {
@@ -144,54 +153,57 @@ open class PrecisionLevelSlider: UIControl {
 
     gradientLayer.frame = bounds
     let notchWidth: CGFloat = 1
-
-    let interval = floor((bounds.size.width) / CGFloat(notchLayers.count))
-
+    
     let longNotchHeight: CGFloat = 14
     let shortNotchHeight: CGFloat = 8
     let offsetY = bounds.height / 2
-
-    notchLayers.enumerated().forEach { i, l in
-
-      let x: CGFloat = CGFloat(i) * interval
-
-      if i % 5 == 0 {
-        l.backgroundColor = longNotchColor.cgColor
-
-        l.frame = CGRect(
-          x: x,
-          y: offsetY - (longNotchHeight / 2),
-          width: notchWidth,
-          height: longNotchHeight)
-
-      } else {
-        l.backgroundColor = shortNotchColor.cgColor
-        l.frame = CGRect(
-          x: x,
-          y: offsetY - (shortNotchHeight / 2),
-          width: notchWidth,
-          height: shortNotchHeight)
-      }
+    
+    var contentWidth: CGFloat = 0.0
+    
+    if notchLayers.count > 0 {
+        notchLayers.enumerated().forEach { i, l in
+            
+            let x: CGFloat = CGFloat(i) * notchSpacing
+            
+            if i % 5 == 0 {
+                l.backgroundColor = longNotchColor.cgColor
+                
+                l.frame = CGRect(
+                    x: x,
+                    y: offsetY - (longNotchHeight / 2),
+                    width: notchWidth,
+                    height: longNotchHeight)
+                
+            } else {
+                l.backgroundColor = shortNotchColor.cgColor
+                l.frame = CGRect(
+                    x: x,
+                    y: offsetY - (shortNotchHeight / 2),
+                    width: notchWidth,
+                    height: shortNotchHeight)
+            }
+        }
+        
+        contentWidth = notchLayers.last!.frame.maxX - notchWidth
     }
 
     centerNotchLayer.backgroundColor = centerNotchColor.cgColor
     centerNotchLayer.frame = CGRect(x: bounds.midX, y: 0, width: notchWidth, height: bounds.height)
 
     let contentSize = CGSize(
-      width: notchLayers.last!.frame.maxX - notchWidth,
+      width: contentWidth,
       height: bounds.height
     )
 
     contentView.frame.size = contentSize
     scrollView.contentSize = contentSize
 
-    let inset = contentSize.width / 2 + (max(0, scrollView.bounds.width - contentSize.width) / 2)
-    scrollView.contentInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+    let inset: CGFloat = scrollView.bounds.width / 2
+    scrollView.contentInset = UIEdgeInsetsMake(0, inset, 0, inset)
 
   }
 
   func setup() {
-
     layer.mask = gradientLayer
 
     backgroundColor = UIColor.clear
@@ -204,9 +216,25 @@ open class PrecisionLevelSlider: UIControl {
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     addSubview(scrollView)
     scrollView.addSubview(contentView)
-    notchLayers.forEach { contentView.layer.addSublayer($0) }
+    
     layer.addSublayer(centerNotchLayer)
   }
+    
+    fileprivate func addNotchLayers() {
+        if let sublayers = contentView.layer.sublayers {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+        notchLayers = []
+        
+        for _ in 0..<notchCount {
+            let notchLayer = CALayer()
+            contentView.layer.addSublayer(notchLayer)
+            
+            notchLayers.append(notchLayer)
+        }
+    }
 
   fileprivate func offsetToValue() -> Float {
 
