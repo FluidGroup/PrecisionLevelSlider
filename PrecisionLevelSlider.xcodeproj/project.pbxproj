@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B92AF1D1DEB23720000A6AA /* PrecisionLevelSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */; };
-		4B92AF221DEB23720000A6AA /* PrecisionLevelSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92AF211DEB23720000A6AA /* PrecisionLevelSliderTests.swift */; };
 		4B92AF241DEB23720000A6AA /* PrecisionLevelSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B92AF161DEB23720000A6AA /* PrecisionLevelSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B92AF2E1DEB23950000A6AA /* PrecisionLevelSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92AF2D1DEB23950000A6AA /* PrecisionLevelSlider.swift */; };
 		4B92AF361DEB429A0000A6AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92AF351DEB429A0000A6AA /* AppDelegate.swift */; };
@@ -16,28 +14,13 @@
 		4B92AF3B1DEB429A0000A6AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AF391DEB429A0000A6AA /* Main.storyboard */; };
 		4B92AF3D1DEB429A0000A6AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AF3C1DEB429A0000A6AA /* Assets.xcassets */; };
 		4B92AF401DEB429A0000A6AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B92AF3E1DEB429A0000A6AA /* LaunchScreen.storyboard */; };
-		4B92AF4B1DEB429B0000A6AA /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B92AF4A1DEB429B0000A6AA /* DemoTests.swift */; };
 		4B92AF531DEB430C0000A6AA /* PrecisionLevelSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */; };
 		4B92AF541DEB430C0000A6AA /* PrecisionLevelSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4BC5B3451DEB4C790045F500 /* RevealServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC5B3431DEB4C600045F500 /* RevealServer.framework */; };
-		4BC5B3461DEB4C790045F500 /* RevealServer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC5B3431DEB4C600045F500 /* RevealServer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		65B5D0DA548152DAFAC19A21 /* Pods_PrecisionLevelSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D955D32C2E0E4D742FD139BA /* Pods_PrecisionLevelSlider.framework */; };
+		BE7C6DEEA73AC7B39BD85290 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C4C017F869346E2BDD3E10 /* Pods_Demo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4B92AF1E1DEB23720000A6AA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B92AF0A1DEB23720000A6AA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4B92AF121DEB23720000A6AA;
-			remoteInfo = PrecisionLevelSlider;
-		};
-		4B92AF471DEB429B0000A6AA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4B92AF0A1DEB23720000A6AA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4B92AF321DEB429A0000A6AA;
-			remoteInfo = Demo;
-		};
 		4B92AF551DEB430C0000A6AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4B92AF0A1DEB23720000A6AA /* Project object */;
@@ -54,7 +37,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4BC5B3461DEB4C790045F500 /* RevealServer.framework in Embed Frameworks */,
 				4B92AF541DEB430C0000A6AA /* PrecisionLevelSlider.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -63,12 +45,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02ECC32CB612D003EC5C58D5 /* Pods_DemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PrecisionLevelSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B92AF161DEB23720000A6AA /* PrecisionLevelSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrecisionLevelSlider.h; sourceTree = "<group>"; };
 		4B92AF171DEB23720000A6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B92AF1C1DEB23720000A6AA /* PrecisionLevelSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PrecisionLevelSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B92AF211DEB23720000A6AA /* PrecisionLevelSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecisionLevelSliderTests.swift; sourceTree = "<group>"; };
-		4B92AF231DEB23720000A6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B92AF2D1DEB23950000A6AA /* PrecisionLevelSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrecisionLevelSlider.swift; sourceTree = "<group>"; };
 		4B92AF331DEB429A0000A6AA /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B92AF351DEB429A0000A6AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,10 +57,17 @@
 		4B92AF3C1DEB429A0000A6AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B92AF3F1DEB429A0000A6AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B92AF411DEB429A0000A6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B92AF461DEB429B0000A6AA /* DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B92AF4A1DEB429B0000A6AA /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
-		4B92AF4C1DEB429B0000A6AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4BC5B3431DEB4C600045F500 /* RevealServer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevealServer.framework; sourceTree = "<group>"; };
+		4BB5D69B8E3D16E38F9515A9 /* Pods-PrecisionLevelSlider.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrecisionLevelSlider.debug.xcconfig"; path = "Target Support Files/Pods-PrecisionLevelSlider/Pods-PrecisionLevelSlider.debug.xcconfig"; sourceTree = "<group>"; };
+		67203C37EFFE0FC9F2E2DB42 /* Pods_PrecisionLevelSlider_PrecisionLevelSliderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrecisionLevelSlider_PrecisionLevelSliderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		75A45F0DB160A8B76E5A5EE2 /* Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.release.xcconfig"; path = "Target Support Files/Pods-PrecisionLevelSlider-PrecisionLevelSliderTests/Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.release.xcconfig"; sourceTree = "<group>"; };
+		83C4C017F869346E2BDD3E10 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA860428EAB8F8CD372FE1D0 /* Pods-PrecisionLevelSlider.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrecisionLevelSlider.release.xcconfig"; path = "Target Support Files/Pods-PrecisionLevelSlider/Pods-PrecisionLevelSlider.release.xcconfig"; sourceTree = "<group>"; };
+		C3B048398E44FB7448CE0CE9 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CC01A3E609562367F137D4F0 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
+		CE771463A2E35EBA4690C21D /* Pods-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.release.xcconfig"; path = "Target Support Files/Pods-DemoTests/Pods-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		D955D32C2E0E4D742FD139BA /* Pods_PrecisionLevelSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrecisionLevelSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E210821394FA1C5B1D93126D /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		E65DBE16DD8F868A92B7DB01 /* Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.debug.xcconfig"; path = "Target Support Files/Pods-PrecisionLevelSlider-PrecisionLevelSliderTests/Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,14 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B92AF191DEB23720000A6AA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B92AF1D1DEB23720000A6AA /* PrecisionLevelSlider.framework in Frameworks */,
+				65B5D0DA548152DAFAC19A21 /* Pods_PrecisionLevelSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,15 +83,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BC5B3451DEB4C790045F500 /* RevealServer.framework in Frameworks */,
 				4B92AF531DEB430C0000A6AA /* PrecisionLevelSlider.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B92AF431DEB429B0000A6AA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				BE7C6DEEA73AC7B39BD85290 /* Pods_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,12 +94,11 @@
 		4B92AF091DEB23720000A6AA = {
 			isa = PBXGroup;
 			children = (
-				4BC5B3431DEB4C600045F500 /* RevealServer.framework */,
 				4B92AF151DEB23720000A6AA /* PrecisionLevelSlider */,
-				4B92AF201DEB23720000A6AA /* PrecisionLevelSliderTests */,
 				4B92AF341DEB429A0000A6AA /* Demo */,
-				4B92AF491DEB429B0000A6AA /* DemoTests */,
 				4B92AF141DEB23720000A6AA /* Products */,
+				AE632667F1D8AA07E1BA32D9 /* Pods */,
+				CD2B3634EC99C54407721358 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,9 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */,
-				4B92AF1C1DEB23720000A6AA /* PrecisionLevelSliderTests.xctest */,
 				4B92AF331DEB429A0000A6AA /* Demo.app */,
-				4B92AF461DEB429B0000A6AA /* DemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,15 +119,6 @@
 				4B92AF171DEB23720000A6AA /* Info.plist */,
 			);
 			path = PrecisionLevelSlider;
-			sourceTree = "<group>";
-		};
-		4B92AF201DEB23720000A6AA /* PrecisionLevelSliderTests */ = {
-			isa = PBXGroup;
-			children = (
-				4B92AF211DEB23720000A6AA /* PrecisionLevelSliderTests.swift */,
-				4B92AF231DEB23720000A6AA /* Info.plist */,
-			);
-			path = PrecisionLevelSliderTests;
 			sourceTree = "<group>";
 		};
 		4B92AF341DEB429A0000A6AA /* Demo */ = {
@@ -173,13 +134,30 @@
 			path = Demo;
 			sourceTree = "<group>";
 		};
-		4B92AF491DEB429B0000A6AA /* DemoTests */ = {
+		AE632667F1D8AA07E1BA32D9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4B92AF4A1DEB429B0000A6AA /* DemoTests.swift */,
-				4B92AF4C1DEB429B0000A6AA /* Info.plist */,
+				CC01A3E609562367F137D4F0 /* Pods-Demo.debug.xcconfig */,
+				E210821394FA1C5B1D93126D /* Pods-Demo.release.xcconfig */,
+				C3B048398E44FB7448CE0CE9 /* Pods-DemoTests.debug.xcconfig */,
+				CE771463A2E35EBA4690C21D /* Pods-DemoTests.release.xcconfig */,
+				4BB5D69B8E3D16E38F9515A9 /* Pods-PrecisionLevelSlider.debug.xcconfig */,
+				BA860428EAB8F8CD372FE1D0 /* Pods-PrecisionLevelSlider.release.xcconfig */,
+				E65DBE16DD8F868A92B7DB01 /* Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.debug.xcconfig */,
+				75A45F0DB160A8B76E5A5EE2 /* Pods-PrecisionLevelSlider-PrecisionLevelSliderTests.release.xcconfig */,
 			);
-			path = DemoTests;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CD2B3634EC99C54407721358 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				83C4C017F869346E2BDD3E10 /* Pods_Demo.framework */,
+				02ECC32CB612D003EC5C58D5 /* Pods_DemoTests.framework */,
+				D955D32C2E0E4D742FD139BA /* Pods_PrecisionLevelSlider.framework */,
+				67203C37EFFE0FC9F2E2DB42 /* Pods_PrecisionLevelSlider_PrecisionLevelSliderTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +178,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B92AF271DEB23720000A6AA /* Build configuration list for PBXNativeTarget "PrecisionLevelSlider" */;
 			buildPhases = (
+				9E16F9FA97780E413B81F9D5 /* [CP] Check Pods Manifest.lock */,
 				4B92AF0E1DEB23720000A6AA /* Sources */,
 				4B92AF0F1DEB23720000A6AA /* Frameworks */,
 				4B92AF101DEB23720000A6AA /* Headers */,
@@ -214,32 +193,16 @@
 			productReference = 4B92AF131DEB23720000A6AA /* PrecisionLevelSlider.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4B92AF1B1DEB23720000A6AA /* PrecisionLevelSliderTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B92AF2A1DEB23720000A6AA /* Build configuration list for PBXNativeTarget "PrecisionLevelSliderTests" */;
-			buildPhases = (
-				4B92AF181DEB23720000A6AA /* Sources */,
-				4B92AF191DEB23720000A6AA /* Frameworks */,
-				4B92AF1A1DEB23720000A6AA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4B92AF1F1DEB23720000A6AA /* PBXTargetDependency */,
-			);
-			name = PrecisionLevelSliderTests;
-			productName = PrecisionLevelSliderTests;
-			productReference = 4B92AF1C1DEB23720000A6AA /* PrecisionLevelSliderTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		4B92AF321DEB429A0000A6AA /* Demo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B92AF511DEB429B0000A6AA /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
+				19A01823D8602DCB01B8623B /* [CP] Check Pods Manifest.lock */,
 				4B92AF2F1DEB429A0000A6AA /* Sources */,
 				4B92AF301DEB429A0000A6AA /* Frameworks */,
 				4B92AF311DEB429A0000A6AA /* Resources */,
 				4B92AF571DEB430C0000A6AA /* Embed Frameworks */,
+				E1B4F37CD1FD239BD817AF7F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -250,24 +213,6 @@
 			productName = Demo;
 			productReference = 4B92AF331DEB429A0000A6AA /* Demo.app */;
 			productType = "com.apple.product-type.application";
-		};
-		4B92AF451DEB429B0000A6AA /* DemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B92AF521DEB429B0000A6AA /* Build configuration list for PBXNativeTarget "DemoTests" */;
-			buildPhases = (
-				4B92AF421DEB429B0000A6AA /* Sources */,
-				4B92AF431DEB429B0000A6AA /* Frameworks */,
-				4B92AF441DEB429B0000A6AA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4B92AF481DEB429B0000A6AA /* PBXTargetDependency */,
-			);
-			name = DemoTests;
-			productName = DemoTests;
-			productReference = 4B92AF461DEB429B0000A6AA /* DemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -282,24 +227,14 @@
 					4B92AF121DEB23720000A6AA = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = KU2QEJ9K3Z;
-						LastSwiftMigration = 0810;
-						ProvisioningStyle = Automatic;
-					};
-					4B92AF1B1DEB23720000A6AA = {
-						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = KU2QEJ9K3Z;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					4B92AF321DEB429A0000A6AA = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = KU2QEJ9K3Z;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
-					};
-					4B92AF451DEB429B0000A6AA = {
-						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = KU2QEJ9K3Z;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 4B92AF321DEB429A0000A6AA;
 					};
 				};
 			};
@@ -308,6 +243,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -317,22 +253,13 @@
 			projectRoot = "";
 			targets = (
 				4B92AF121DEB23720000A6AA /* PrecisionLevelSlider */,
-				4B92AF1B1DEB23720000A6AA /* PrecisionLevelSliderTests */,
 				4B92AF321DEB429A0000A6AA /* Demo */,
-				4B92AF451DEB429B0000A6AA /* DemoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4B92AF111DEB23720000A6AA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B92AF1A1DEB23720000A6AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,14 +276,72 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4B92AF441DEB429B0000A6AA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19A01823D8602DCB01B8623B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Demo-checkManifestLockResult.txt",
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-/* End PBXResourcesBuildPhase section */
+		9E16F9FA97780E413B81F9D5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PrecisionLevelSlider-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1B4F37CD1FD239BD817AF7F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/RevealServer/RevealServer.framework/RevealServer",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealServer.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4B92AF0E1DEB23720000A6AA /* Sources */ = {
@@ -364,14 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B92AF2E1DEB23950000A6AA /* PrecisionLevelSlider.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B92AF181DEB23720000A6AA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B92AF221DEB23720000A6AA /* PrecisionLevelSliderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,27 +361,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4B92AF421DEB429B0000A6AA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B92AF4B1DEB429B0000A6AA /* DemoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4B92AF1F1DEB23720000A6AA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4B92AF121DEB23720000A6AA /* PrecisionLevelSlider */;
-			targetProxy = 4B92AF1E1DEB23720000A6AA /* PBXContainerItemProxy */;
-		};
-		4B92AF481DEB429B0000A6AA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4B92AF321DEB429A0000A6AA /* Demo */;
-			targetProxy = 4B92AF471DEB429B0000A6AA /* PBXContainerItemProxy */;
-		};
 		4B92AF561DEB430C0000A6AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4B92AF121DEB23720000A6AA /* PrecisionLevelSlider */;
@@ -479,6 +438,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -524,6 +484,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -533,7 +494,9 @@
 		};
 		4B92AF281DEB23720000A6AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BB5D69B8E3D16E38F9515A9 /* Pods-PrecisionLevelSlider.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -544,17 +507,19 @@
 				INFOPLIST_FILE = PrecisionLevelSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.PrecisionLevelSlider;
+				PRODUCT_BUNDLE_IDENTIFIER = app.muuki.PrecisionLevelSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Debug;
 		};
 		4B92AF291DEB23720000A6AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA860428EAB8F8CD372FE1D0 /* Pods-PrecisionLevelSlider.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -565,41 +530,16 @@
 				INFOPLIST_FILE = PrecisionLevelSlider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.PrecisionLevelSlider;
+				PRODUCT_BUNDLE_IDENTIFIER = app.muuki.PrecisionLevelSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		4B92AF2B1DEB23720000A6AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = KU2QEJ9K3Z;
-				INFOPLIST_FILE = PrecisionLevelSliderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.PrecisionLevelSliderTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		4B92AF2C1DEB23720000A6AA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = KU2QEJ9K3Z;
-				INFOPLIST_FILE = PrecisionLevelSliderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.PrecisionLevelSliderTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Release;
 		};
 		4B92AF4D1DEB429B0000A6AA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC01A3E609562367F137D4F0 /* Pods-Demo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -612,12 +552,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Debug;
 		};
 		4B92AF4E1DEB429B0000A6AA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E210821394FA1C5B1D93126D /* Pods-Demo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -630,37 +571,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		4B92AF4F1DEB429B0000A6AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = KU2QEJ9K3Z;
-				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.DemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
-			};
-			name = Debug;
-		};
-		4B92AF501DEB429B0000A6AA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = KU2QEJ9K3Z;
-				INFOPLIST_FILE = DemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.muuki.DemoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 			};
 			name = Release;
 		};
@@ -685,29 +596,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4B92AF2A1DEB23720000A6AA /* Build configuration list for PBXNativeTarget "PrecisionLevelSliderTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4B92AF2B1DEB23720000A6AA /* Debug */,
-				4B92AF2C1DEB23720000A6AA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4B92AF511DEB429B0000A6AA /* Build configuration list for PBXNativeTarget "Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4B92AF4D1DEB429B0000A6AA /* Debug */,
 				4B92AF4E1DEB429B0000A6AA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4B92AF521DEB429B0000A6AA /* Build configuration list for PBXNativeTarget "DemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4B92AF4F1DEB429B0000A6AA /* Debug */,
-				4B92AF501DEB429B0000A6AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
