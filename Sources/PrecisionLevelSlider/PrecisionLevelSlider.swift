@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import SwiftUI
 import UIKit
 
 open class PrecisionLevelSlider: UIControl {
@@ -44,9 +45,13 @@ open class PrecisionLevelSlider: UIControl {
     }
   }
 
+  var onChangeValue: (Double) -> Void = { _ in }
+
   /// default 0.0. this value will be pinned to min/max
-  @objc open dynamic var value: Float = 0 {
+  public var value: Double = 0 {
     didSet {
+
+      onChangeValue(value)
 
       guard !scrollView.isDecelerating && !scrollView.isDragging else {
         return
@@ -71,7 +76,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   /// default 0.0. the current value may change if outside new min value
-  @objc open dynamic var minimumValue: Float = 0 {
+  public var minimumValue: Double = 0 {
     didSet {
       let offset = valueToOffset(value: value)
 
@@ -92,7 +97,7 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   /// default 1.0. the current value may change if outside new max value
-  @objc open dynamic var maximumValue: Float = 1 {
+  public var maximumValue: Double = 1 {
     didSet {
       let offset = valueToOffset(value: value)
 
@@ -157,6 +162,17 @@ open class PrecisionLevelSlider: UIControl {
 
   open override var intrinsicContentSize: CGSize {
     return CGSize(width: UIView.noIntrinsicMetric, height: 50)
+  }
+
+  open override func contentHuggingPriority(for axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+    switch axis {
+    case .horizontal:
+      return .defaultLow
+    case .vertical:
+      return .defaultHigh
+    @unknown default:
+      return .defaultLow
+    }
   }
 
   func update() {
@@ -232,17 +248,17 @@ open class PrecisionLevelSlider: UIControl {
     layer.addSublayer(centerNotchLayer)
   }
 
-  fileprivate func offsetToValue() -> Float {
+  fileprivate func offsetToValue() -> Double {
 
     let progress =
       (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
-    let actualProgress = Float(min(max(0, progress), 1))
+    let actualProgress = Double(min(max(0, progress), 1))
     let value = ((maximumValue - minimumValue) * actualProgress) + minimumValue
 
     return value
   }
 
-  fileprivate func valueToOffset(value: Float) -> CGPoint {
+  fileprivate func valueToOffset(value: Double) -> CGPoint {
 
     let progress = (value - minimumValue) / (maximumValue - minimumValue)
     let x = contentView.bounds.size.width * CGFloat(progress) - scrollView.contentInset.left
@@ -283,4 +299,57 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
       sendActions(for: .valueChanged)
     }
   }
+}
+
+public struct SwiftUIPrecisionLevelSlider: UIViewRepresentable {
+
+  @Binding var value: Double
+
+  public init(value: Binding<Double>) {
+    self._value = value
+  }
+
+  public func makeUIView(context: Context) -> PrecisionLevelSlider {
+    let view = PrecisionLevelSlider()
+    view.onChangeValue = { value in
+      self.value = value
+    }
+    return view
+  }
+
+  public func updateUIView(_ uiView: PrecisionLevelSlider, context: Context) {
+    uiView.value = self.value
+  }
+
+}
+
+#if DEBUG
+
+private struct DemoContent: View {
+
+  @State var value: Double = 0
+
+  var body: some View {
+    VStack {
+      Text("\(value)")
+      SwiftUIPrecisionLevelSlider(value: $value)
+      Button("Set") {
+        value = 1
+      }
+    }
+
+  }
+}
+
+#Preview(
+  "SwiftUI",
+  body: {
+    DemoContent()
+  }
+)
+
+#endif
+
+@available(iOS 17, *)#Preview("UIKit"){
+  PrecisionLevelSlider()
 }
