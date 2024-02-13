@@ -26,6 +26,36 @@ import UIKit
 
 open class PrecisionLevelSlider: UIControl {
 
+  public struct ValueRange {
+
+    public let range: ClosedRange<Double>
+    public let transform: (Double) -> Double
+
+    public init(
+      range: ClosedRange<Double>,
+      transform: @escaping (Double) -> Double
+    ) {
+      self.range = range
+      self.transform = transform
+    }
+
+  }
+
+  public struct Haptics {
+
+    public enum Style {
+      case selection
+      case impact(style: UIImpactFeedbackGenerator.FeedbackStyle, intensity: CGFloat)
+    }
+
+    public let trigger: (Double) -> Style?
+
+    public init(trigger: @escaping (Double) -> Style?) {
+      self.trigger = trigger
+    }
+
+  }
+
   private final class Proxy: ObservableObject {
     @Published var value: Double = 0
   }
@@ -52,6 +82,19 @@ open class PrecisionLevelSlider: UIControl {
 
   var onChangeValue: (Double) -> Void = { _ in }
 
+  private let haptics: Haptics?
+
+  private lazy var lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+
+  private lazy var mediumImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+
+  private lazy var heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+
+  private lazy var softImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .soft)
+
+  private lazy var rigidImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .rigid)
+
+  private lazy var selectionFeedbackGenerator = UISelectionFeedbackGenerator()
   private var proxy: Proxy?
 
   /// default 0.0. this value will be pinned to min/max
@@ -86,7 +129,7 @@ open class PrecisionLevelSlider: UIControl {
     }
   }
 
-  public var range: ClosedRange<Double>
+  public var range: ValueRange
 
   open var isContinuous: Bool = true
 
@@ -112,7 +155,8 @@ open class PrecisionLevelSlider: UIControl {
   // MARK: - Initializers
 
   public convenience init(
-    range: ClosedRange<Double>,
+    range: ValueRange,
+    haptics: Haptics?,
     @ViewBuilder centerLevel: @escaping (Double) -> some View,
     @ViewBuilder track: @escaping (Double) -> some View
   ) {
@@ -121,6 +165,7 @@ open class PrecisionLevelSlider: UIControl {
 
     self.init(
       range: range,
+      haptics: haptics,
       centerLevelView: SwiftUIHostingView(content: {
         Provider(proxy: proxy) {
           centerLevel($0)
@@ -138,7 +183,8 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   public init(
-    range: ClosedRange<Double>,
+    range: ValueRange,
+    haptics: Haptics? = nil,
     centerLevelView: UIView,
     trackView: UIView
   ) {
@@ -146,6 +192,7 @@ open class PrecisionLevelSlider: UIControl {
     self.centerLevelView = centerLevelView
     self.trackView = trackView
     self.range = range
+    self.haptics = haptics
 
     super.init(frame: .zero)
 
@@ -183,7 +230,22 @@ open class PrecisionLevelSlider: UIControl {
 
   open override func layoutSubviews() {
     super.layoutSubviews()
-    update()
+
+    let offset = valueToOffset(value: value)
+    scrollView.setContentOffset(offset, animated: false)
+
+    maskGradientLayer.frame = bounds
+
+    let contentSize = CGSize(
+      width: bounds.width,
+      height: bounds.height
+    )
+
+    contentView.frame.size = contentSize
+    scrollView.contentSize = contentSize
+
+    let inset = contentSize.width / 2 + (max(0, scrollView.bounds.width - contentSize.width) / 2)
+    scrollView.contentInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
   }
 
   open override var intrinsicContentSize: CGSize {
@@ -204,39 +266,19 @@ open class PrecisionLevelSlider: UIControl {
     }
   }
 
-  func update() {
-
-    let offset = valueToOffset(value: value)
-    scrollView.setContentOffset(offset, animated: false)
-
-    maskGradientLayer.frame = bounds
-
-    let contentSize = CGSize(
-      width: bounds.width,
-      height: bounds.height
-    )
-
-    contentView.frame.size = contentSize
-    scrollView.contentSize = contentSize
-
-    let inset = contentSize.width / 2 + (max(0, scrollView.bounds.width - contentSize.width) / 2)
-    scrollView.contentInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
-
-  }
-
   fileprivate func offsetToValue() -> Double {
 
     let progress =
     (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
     let actualProgress = Double(min(max(0, progress), 1))
-    let value = ((range.upperBound - range.lowerBound) * actualProgress) + range.lowerBound
+    let value = ((range.range.upperBound - range.range.lowerBound) * actualProgress) + range.range.lowerBound
 
-    return value
+    return range.transform(value)
   }
 
   fileprivate func valueToOffset(value: Double) -> CGPoint {
 
-    let progress = (value - range.lowerBound) / (range.upperBound - range.lowerBound)
+    let progress = (value - range.range.lowerBound) / (range.range.upperBound - range.range.lowerBound)
     let x = contentView.bounds.size.width * CGFloat(progress) - scrollView.contentInset.left
     return CGPoint(x: x, y: 0)
   }
@@ -256,26 +298,64 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
     }
 
     if isContinuous {
+      let oldValue = value
       value = offsetToValue()
-      sendActions(for: .valueChanged)
+      if oldValue != value {
+        triggerHaptics()
+        sendActions(for: .valueChanged)
+      }
     }
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     if isContinuous == false {
+      let oldValue = value
       value = offsetToValue()
-      sendActions(for: .valueChanged)
+      if oldValue != value {
+        triggerHaptics()
+        sendActions(for: .valueChanged)
+      }
     }
   }
 
   public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
   {
     if decelerate == false && isContinuous == false {
+      let oldValue = value
       value = offsetToValue()
-      sendActions(for: .valueChanged)
+      if oldValue != value {
+        triggerHaptics()
+        sendActions(for: .valueChanged)
+      }
     }
   }
 
+  private func triggerHaptics() {
+    guard let style = haptics?.trigger(value) else {
+      return
+    }
+
+    switch style {
+    case .selection:
+      selectionFeedbackGenerator.selectionChanged()
+    case .impact(let style, let intensity):
+      switch style {
+      case .light:
+        lightImpactFeedbackGenerator.impactOccurred(intensity: intensity)
+      case .medium:
+        mediumImpactFeedbackGenerator.impactOccurred(intensity: intensity)
+      case .heavy:
+        heavyImpactFeedbackGenerator.impactOccurred(intensity: intensity)
+      case .soft:
+        softImpactFeedbackGenerator.impactOccurred(intensity: intensity)
+      case .rigid:
+        rigidImpactFeedbackGenerator.impactOccurred(intensity: intensity)
+      @unknown default:
+        break
+      }
+    }
+
+  }
 }
 
 @available(iOS 15, *)
@@ -285,15 +365,18 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
 
   private let centerLevel: (Double) -> CenterLevel
   private let track: (Double) -> Track
-  private let range: ClosedRange<Double>
+  private let range: PrecisionLevelSlider.ValueRange
+  private let haptics: PrecisionLevelSlider.Haptics?
 
   public init(
     value: Binding<Double>,
-    range: ClosedRange<Double>,
+    haptics: PrecisionLevelSlider.Haptics?,
+    range: PrecisionLevelSlider.ValueRange,
     @ViewBuilder centerLevel: @escaping (Double) -> CenterLevel,
     @ViewBuilder track: @escaping (Double) -> Track
   ) {
     self._value = value
+    self.haptics = haptics
     self.centerLevel = centerLevel
     self.track = track
     self.range = range
@@ -302,13 +385,17 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
   public func makeUIView(context: Context) -> PrecisionLevelSlider {
     let view = PrecisionLevelSlider(
       range: range,
+      haptics: haptics,
       centerLevel: centerLevel,
       track: track
     )
 
     view.tintColor = .systemRed
     view.onChangeValue = { value in
-      self.value = value
+      // Prevent from modifying during view update warnings.
+      Task { @MainActor in
+        self.value = value
+      }
     }
     return view
   }
@@ -318,103 +405,6 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
   }
 
 }
-
-#if DEBUG
-
-struct ShortBar: View {
-  var body: some View {
-    RoundedRectangle(cornerRadius: 8)
-      .frame(width: 1, height: 10)
-  }
-}
-
-
-@available(iOS 15, *)
-private struct DemoContent: View {
-
-  @State var value: Double = 0
-
-  var body: some View {
-    VStack {
-      Text("\(value)")
-      SwiftUIPrecisionLevelSlider(
-        value: $value,
-        range: -1...1,
-        centerLevel: {
-          value in
-          HStack {
-            Spacer()
-            VStack {
-              Rectangle()
-                .frame(width: 1)
-              Spacer()
-            }
-            Spacer()
-          }
-          .foregroundStyle(.tint)
-        },
-        track: { value in
-          VStack {
-            HStack {
-              Spacer()
-              Circle()
-                .frame(width: 6, height: 6)
-                .opacity(value == 0 ? 0 : 1)
-                .animation(.spring, value: value == 0)
-              Spacer()
-            }
-            HStack(spacing: 0) {
-              ForEach(0..<8) { i in
-                ShortBar()
-                  .foregroundStyle(.primary)
-                Group {
-                  Spacer(minLength: 0)
-                  ShortBar()
-                  Spacer(minLength: 0)
-                  ShortBar()
-                  Spacer(minLength: 0)
-                  ShortBar()
-                  Spacer(minLength: 0)
-                  ShortBar()
-                  Spacer(minLength: 0)
-                }
-                .foregroundStyle(.secondary)
-              }
-              ShortBar()
-                .foregroundStyle(.primary)
-            }
-          }
-          .foregroundStyle(.tint)
-        }
-      )
-      .tint(.primary)
-      .frame(height: 50)
-
-      HStack {
-        Button("0") {
-          value = 0
-        }
-        Button("0.5") {
-          value = 0.5
-        }
-        Button("1") {
-          value = 1
-        }
-      }
-    }
-
-  }
-}
-
-@available(iOS 15, *)
-#Preview(
-  "SwiftUI",
-  body: {
-    DemoContent()
-  }
-)
-
-#endif
 
 //@available(iOS 17, *)#Preview("UIKit"){
 //  PrecisionLevelSlider()
