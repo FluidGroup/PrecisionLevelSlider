@@ -7,6 +7,13 @@ Not grabbing knobs but sliding reels.
   <img src="example.gif" width=375>
 </p>
 
+## Features
+
+- No bundle built-in UI
+- Make your design for this slider - center indicator and background design.
+- Triggers haptic feedback according to value changes.
+- Specialized for iOS - SwiftUI, UIKit
+
 ## Usage
 
 ### SwiftUI
