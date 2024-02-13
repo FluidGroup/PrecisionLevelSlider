@@ -1,14 +1,34 @@
 # PrecisionLevelSlider
 
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-
-UI component library, such as Apple's Photos app. 
-
-<p align="center">
-  <img src="sample.png" width=375>
-</p>
+A slider that allows the user to select a value with a high level of precision.
+Not grabbing knobs but sliding reels.
 
 <p align="center">
-  <img src="sample.gif" width=375>
+  <img src="example.gif" width=375>
 </p>
 
+## Usage
+
+### SwiftUI
+
+```swift
+SwiftUIPrecisionLevelSlider(
+    value: $value,
+    haptics: .init(trigger: { value in
+        // trigger haptics according to the value
+    }),
+    range: .init(range: -45...45, transform: { $0.rounded(.toNearestOrEven) }),
+    centerLevel: { value in
+        // your custom view here
+    },
+    track: { value in
+        // your custom view here
+    }
+)
+.tint(.primary)
+.frame(height: 50)
+```
+
+### UIKit
+
+Use `PrecisionLevelSlider`
