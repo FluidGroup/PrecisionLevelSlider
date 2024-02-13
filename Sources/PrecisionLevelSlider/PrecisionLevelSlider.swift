@@ -21,39 +21,50 @@
 // THE SOFTWARE.
 
 import SwiftUI
+import SwiftUIHosting
 import UIKit
 
 open class PrecisionLevelSlider: UIControl {
 
-  // MARK: - Properties
-
-  open var longNotchColor: UIColor = .black {
-    didSet {
-      update()
-    }
+  private final class Proxy: ObservableObject {
+    @Published var value: Double = 0
   }
 
-  open var shortNotchColor: UIColor = UIColor(white: 0.2, alpha: 1) {
-    didSet {
-      update()
-    }
-  }
+  private struct Provider<Content: View>: View {
 
-  open var centerNotchColor: UIColor = UIColor.orange {
-    didSet {
-      update()
+    @ObservedObject var proxy: Proxy
+
+    private let content: (Double) -> Content
+
+    init(
+      proxy: Proxy,
+      @ViewBuilder content: @escaping (Double) -> Content
+    ) {
+      self.content = content
+      self.proxy = proxy
     }
+
+    var body: some View {
+      content(proxy.value)
+    }
+
   }
 
   var onChangeValue: (Double) -> Void = { _ in }
+
+  private var proxy: Proxy?
 
   /// default 0.0. this value will be pinned to min/max
   public var value: Double = 0 {
     didSet {
 
+      if oldValue != value {
+        proxy?.value = value
+      }
+
       onChangeValue(value)
 
-      guard !scrollView.isDecelerating && !scrollView.isDragging else {
+      guard !scrollView.isDecelerating && !scrollView.isTracking else {
         return
       }
 
@@ -75,60 +86,14 @@ open class PrecisionLevelSlider: UIControl {
     }
   }
 
-  /// default 0.0. the current value may change if outside new min value
-  public var minimumValue: Double = 0 {
-    didSet {
-      let offset = valueToOffset(value: value)
-
-      UIView.animate(
-        withDuration: 0.3,
-        delay: 0,
-        usingSpringWithDamping: 1,
-        initialSpringVelocity: 0,
-        options: [.beginFromCurrentState, .allowUserInteraction],
-        animations: {
-
-          self.scrollView.setContentOffset(offset, animated: false)
-
-        }
-      ) { (finish) in
-      }
-    }
-  }
-
-  /// default 1.0. the current value may change if outside new max value
-  public var maximumValue: Double = 1 {
-    didSet {
-      let offset = valueToOffset(value: value)
-
-      UIView.animate(
-        withDuration: 0.3,
-        delay: 0,
-        usingSpringWithDamping: 1,
-        initialSpringVelocity: 0,
-        options: [.beginFromCurrentState, .allowUserInteraction],
-        animations: {
-
-          self.scrollView.setContentOffset(offset, animated: false)
-
-        }
-      ) { (finish) in
-      }
-    }
-  }
+  public var range: ClosedRange<Double>
 
   open var isContinuous: Bool = true
 
   private let scrollView = UIScrollView()
   private let contentView = UIView()
-  private let notchLayers: [CALayer] = {
-    return (0..<31).map { _ -> CALayer in
-      CALayer()
-    }
-  }()
-  private let centerNotchLayer = CALayer()
 
-  private let gradientLayer: CAGradientLayer = {
+  private let maskGradientLayer: CAGradientLayer = {
 
     let gradientLayer = CAGradientLayer()
     gradientLayer.colors = [
@@ -141,16 +106,77 @@ open class PrecisionLevelSlider: UIControl {
     return gradientLayer
   }()
 
+  private let centerLevelView: UIView
+  private let trackView: UIView
+
   // MARK: - Initializers
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    setup()
+  public convenience init(
+    range: ClosedRange<Double>,
+    @ViewBuilder centerLevel: @escaping (Double) -> some View,
+    @ViewBuilder track: @escaping (Double) -> some View
+  ) {
+
+    let proxy = Proxy()
+
+    self.init(
+      range: range,
+      centerLevelView: SwiftUIHostingView(content: {
+        Provider(proxy: proxy) {
+          centerLevel($0)
+        }
+      }),
+      trackView: SwiftUIHostingView(content: {
+        Provider(proxy: proxy) {
+          track($0)
+        }
+      })
+    )
+
+    self.proxy = proxy
+
   }
 
-  public required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setup()
+  public init(
+    range: ClosedRange<Double>,
+    centerLevelView: UIView,
+    trackView: UIView
+  ) {
+
+    self.centerLevelView = centerLevelView
+    self.trackView = trackView
+    self.range = range
+
+    super.init(frame: .zero)
+
+    layer.mask = maskGradientLayer
+
+    backgroundColor = UIColor.clear
+
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.showsHorizontalScrollIndicator = false
+    scrollView.delegate = self
+
+    scrollView.frame = bounds
+    scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+    addSubview(scrollView)
+
+    scrollView.addSubview(contentView)
+
+    contentView.addSubview(trackView)
+    trackView.frame = contentView.bounds
+    trackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+    addSubview(centerLevelView)
+    centerLevelView.isUserInteractionEnabled = false
+    centerLevelView.frame = bounds
+    centerLevelView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+  }
+
+  @available(*, unavailable)
+  public required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Functions
@@ -161,7 +187,10 @@ open class PrecisionLevelSlider: UIControl {
   }
 
   open override var intrinsicContentSize: CGSize {
-    return CGSize(width: UIView.noIntrinsicMetric, height: 50)
+    return CGSize(
+      width: UIView.noIntrinsicMetric,
+      height: UIView.noIntrinsicMetric
+    )
   }
 
   open override func contentHuggingPriority(for axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
@@ -180,45 +209,10 @@ open class PrecisionLevelSlider: UIControl {
     let offset = valueToOffset(value: value)
     scrollView.setContentOffset(offset, animated: false)
 
-    gradientLayer.frame = bounds
-    let notchWidth: CGFloat = 1
-
-    let interval = floor((bounds.size.width) / CGFloat(notchLayers.count))
-
-    let longNotchHeight: CGFloat = 14
-    let shortNotchHeight: CGFloat = 8
-    let offsetY = bounds.height / 2
-
-    notchLayers.enumerated().forEach { i, l in
-
-      let x: CGFloat = CGFloat(i) * interval
-
-      if i % 5 == 0 {
-        l.backgroundColor = longNotchColor.cgColor
-
-        l.frame = CGRect(
-          x: x,
-          y: offsetY - (longNotchHeight / 2),
-          width: notchWidth,
-          height: longNotchHeight
-        )
-
-      } else {
-        l.backgroundColor = shortNotchColor.cgColor
-        l.frame = CGRect(
-          x: x,
-          y: offsetY - (shortNotchHeight / 2),
-          width: notchWidth,
-          height: shortNotchHeight
-        )
-      }
-    }
-
-    centerNotchLayer.backgroundColor = centerNotchColor.cgColor
-    centerNotchLayer.frame = CGRect(x: bounds.midX, y: 0, width: notchWidth, height: bounds.height)
+    maskGradientLayer.frame = bounds
 
     let contentSize = CGSize(
-      width: notchLayers.last!.frame.maxX - notchWidth,
+      width: bounds.width,
       height: bounds.height
     )
 
@@ -230,37 +224,19 @@ open class PrecisionLevelSlider: UIControl {
 
   }
 
-  func setup() {
-
-    layer.mask = gradientLayer
-
-    backgroundColor = UIColor.clear
-
-    scrollView.showsVerticalScrollIndicator = false
-    scrollView.showsHorizontalScrollIndicator = false
-    scrollView.delegate = self
-
-    scrollView.frame = bounds
-    scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    addSubview(scrollView)
-    scrollView.addSubview(contentView)
-    notchLayers.forEach { contentView.layer.addSublayer($0) }
-    layer.addSublayer(centerNotchLayer)
-  }
-
   fileprivate func offsetToValue() -> Double {
 
     let progress =
-      (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
+    (scrollView.contentOffset.x + scrollView.contentInset.left) / contentView.bounds.size.width
     let actualProgress = Double(min(max(0, progress), 1))
-    let value = ((maximumValue - minimumValue) * actualProgress) + minimumValue
+    let value = ((range.upperBound - range.lowerBound) * actualProgress) + range.lowerBound
 
     return value
   }
 
   fileprivate func valueToOffset(value: Double) -> CGPoint {
 
-    let progress = (value - minimumValue) / (maximumValue - minimumValue)
+    let progress = (value - range.lowerBound) / (range.upperBound - range.lowerBound)
     let x = contentView.bounds.size.width * CGFloat(progress) - scrollView.contentInset.left
     return CGPoint(x: x, y: 0)
   }
@@ -299,18 +275,38 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
       sendActions(for: .valueChanged)
     }
   }
+
 }
 
-public struct SwiftUIPrecisionLevelSlider: UIViewRepresentable {
+@available(iOS 15, *)
+public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIViewRepresentable {
 
   @Binding var value: Double
 
-  public init(value: Binding<Double>) {
+  private let centerLevel: (Double) -> CenterLevel
+  private let track: (Double) -> Track
+  private let range: ClosedRange<Double>
+
+  public init(
+    value: Binding<Double>,
+    range: ClosedRange<Double>,
+    @ViewBuilder centerLevel: @escaping (Double) -> CenterLevel,
+    @ViewBuilder track: @escaping (Double) -> Track
+  ) {
     self._value = value
+    self.centerLevel = centerLevel
+    self.track = track
+    self.range = range
   }
 
   public func makeUIView(context: Context) -> PrecisionLevelSlider {
-    let view = PrecisionLevelSlider()
+    let view = PrecisionLevelSlider(
+      range: range,
+      centerLevel: centerLevel,
+      track: track
+    )
+
+    view.tintColor = .systemRed
     view.onChangeValue = { value in
       self.value = value
     }
@@ -325,6 +321,15 @@ public struct SwiftUIPrecisionLevelSlider: UIViewRepresentable {
 
 #if DEBUG
 
+struct ShortBar: View {
+  var body: some View {
+    RoundedRectangle(cornerRadius: 8)
+      .frame(width: 1, height: 10)
+  }
+}
+
+
+@available(iOS 15, *)
 private struct DemoContent: View {
 
   @State var value: Double = 0
@@ -332,15 +337,76 @@ private struct DemoContent: View {
   var body: some View {
     VStack {
       Text("\(value)")
-      SwiftUIPrecisionLevelSlider(value: $value)
-      Button("Set") {
-        value = 1
+      SwiftUIPrecisionLevelSlider(
+        value: $value,
+        range: -1...1,
+        centerLevel: {
+          value in
+          HStack {
+            Spacer()
+            VStack {
+              Rectangle()
+                .frame(width: 1)
+              Spacer()
+            }
+            Spacer()
+          }
+          .foregroundStyle(.tint)
+        },
+        track: { value in
+          VStack {
+            HStack {
+              Spacer()
+              Circle()
+                .frame(width: 6, height: 6)
+                .opacity(value == 0 ? 0 : 1)
+                .animation(.spring, value: value == 0)
+              Spacer()
+            }
+            HStack(spacing: 0) {
+              ForEach(0..<8) { i in
+                ShortBar()
+                  .foregroundStyle(.primary)
+                Group {
+                  Spacer(minLength: 0)
+                  ShortBar()
+                  Spacer(minLength: 0)
+                  ShortBar()
+                  Spacer(minLength: 0)
+                  ShortBar()
+                  Spacer(minLength: 0)
+                  ShortBar()
+                  Spacer(minLength: 0)
+                }
+                .foregroundStyle(.secondary)
+              }
+              ShortBar()
+                .foregroundStyle(.primary)
+            }
+          }
+          .foregroundStyle(.tint)
+        }
+      )
+      .tint(.primary)
+      .frame(height: 50)
+
+      HStack {
+        Button("0") {
+          value = 0
+        }
+        Button("0.5") {
+          value = 0.5
+        }
+        Button("1") {
+          value = 1
+        }
       }
     }
 
   }
 }
 
+@available(iOS 15, *)
 #Preview(
   "SwiftUI",
   body: {
@@ -350,6 +416,6 @@ private struct DemoContent: View {
 
 #endif
 
-@available(iOS 17, *)#Preview("UIKit"){
-  PrecisionLevelSlider()
-}
+//@available(iOS 17, *)#Preview("UIKit"){
+//  PrecisionLevelSlider()
+//}
