@@ -390,7 +390,6 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
       track: track
     )
 
-    view.tintColor = .systemRed
     view.onChangeValue = { value in
       // Prevent from modifying during view update warnings.
       Task { @MainActor in
