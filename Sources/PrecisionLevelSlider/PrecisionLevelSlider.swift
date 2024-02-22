@@ -231,9 +231,6 @@ open class PrecisionLevelSlider: UIControl {
   open override func layoutSubviews() {
     super.layoutSubviews()
 
-    let offset = valueToOffset(value: value)
-    scrollView.setContentOffset(offset, animated: false)
-
     maskGradientLayer.frame = bounds
 
     let contentSize = CGSize(
@@ -246,6 +243,9 @@ open class PrecisionLevelSlider: UIControl {
 
     let inset = contentSize.width / 2 + (max(0, scrollView.bounds.width - contentSize.width) / 2)
     scrollView.contentInset = UIEdgeInsets(top: 0, left: inset, bottom: 0, right: inset)
+
+    let offset = valueToOffset(value: value)
+    scrollView.setContentOffset(offset, animated: false)
   }
 
   open override var intrinsicContentSize: CGSize {
