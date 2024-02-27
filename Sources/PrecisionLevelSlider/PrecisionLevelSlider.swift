@@ -58,24 +58,25 @@ open class PrecisionLevelSlider: UIControl {
 
   private final class Proxy: ObservableObject {
     @Published var value: Double = 0
+    @Published var isDragging: Bool = false
   }
 
   private struct Provider<Content: View>: View {
 
     @ObservedObject var proxy: Proxy
 
-    private let content: (Double) -> Content
+    private let content: (Double, Bool) -> Content
 
     init(
       proxy: Proxy,
-      @ViewBuilder content: @escaping (Double) -> Content
+      @ViewBuilder content: @escaping (Double, Bool) -> Content
     ) {
       self.content = content
       self.proxy = proxy
     }
 
     var body: some View {
-      content(proxy.value)
+      content(proxy.value, proxy.isDragging)
     }
 
   }
@@ -134,6 +135,15 @@ open class PrecisionLevelSlider: UIControl {
 
   open var isContinuous: Bool = true
 
+  private var isDragging: Bool = false {
+    didSet {
+      if oldValue != isDragging {
+        proxy?.isDragging = isDragging
+      }
+      onChangeDragState(isDragging)
+    }
+  }
+
   private let scrollView = UIScrollView()
   private let contentView = UIView()
 
@@ -158,8 +168,8 @@ open class PrecisionLevelSlider: UIControl {
   public convenience init(
     range: ValueRange,
     haptics: Haptics?,
-    @ViewBuilder centerLevel: @escaping (Double) -> some View,
-    @ViewBuilder track: @escaping (Double) -> some View
+    @ViewBuilder centerLevel: @escaping (Double, Bool) -> some View,
+    @ViewBuilder track: @escaping (Double, Bool) -> some View
   ) {
 
     let proxy = Proxy()
@@ -169,12 +179,12 @@ open class PrecisionLevelSlider: UIControl {
       haptics: haptics,
       centerLevelView: SwiftUIHostingView(content: {
         Provider(proxy: proxy) {
-          centerLevel($0)
+          centerLevel($0, $1)
         }
       }),
       trackView: SwiftUIHostingView(content: {
         Provider(proxy: proxy) {
-          track($0)
+          track($0, $1)
         }
       })
     )
@@ -309,12 +319,12 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
   }
 
   public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    onChangeDragState(true)
+    isDragging = true
   }
 
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 
-    onChangeDragState(false)
+    isDragging = false
 
     if isContinuous == false {
 
@@ -330,7 +340,7 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
   public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
 
     if decelerate == false {
-      onChangeDragState(false)
+      isDragging = false
     }
 
     if decelerate == false && isContinuous == false {
@@ -377,8 +387,8 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
 
   @Binding var value: Double
 
-  private let centerLevel: (Double) -> CenterLevel
-  private let track: (Double) -> Track
+  private let centerLevel: (Double, Bool) -> CenterLevel
+  private let track: (Double, Bool) -> Track
   private let range: PrecisionLevelSlider.ValueRange
   private let haptics: PrecisionLevelSlider.Haptics?
   private let draggingHandler: (Bool) -> Void
@@ -388,8 +398,8 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
     haptics: PrecisionLevelSlider.Haptics?,
     range: PrecisionLevelSlider.ValueRange,
     draggingHandler: @escaping (Bool) -> Void = { _ in },
-    @ViewBuilder centerLevel: @escaping (Double) -> CenterLevel,
-    @ViewBuilder track: @escaping (Double) -> Track
+    @ViewBuilder centerLevel: @escaping (Double, Bool) -> CenterLevel,
+    @ViewBuilder track: @escaping (Double, Bool) -> Track
   ) {
     self._value = value
     self.haptics = haptics

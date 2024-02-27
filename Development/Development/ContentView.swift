@@ -47,7 +47,7 @@ private struct DemoContent: View {
         draggingHandler: { value in
           isDragging = value
         },
-        centerLevel: { value in
+        centerLevel: { value, isDragging in
           HStack {
             Spacer()
             VStack {
@@ -59,7 +59,7 @@ private struct DemoContent: View {
           }
           .foregroundStyle(.tint)
         },
-        track: { value in
+        track: { value, isDragging in
           VStack {
             HStack {
               Spacer()
