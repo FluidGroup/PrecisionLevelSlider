@@ -25,10 +25,16 @@ struct ShortBar: View {
 private struct DemoContent: View {
 
   @State var value: Double = 0
+  @State var isDragging: Bool = false
 
   var body: some View {
     VStack {
-      Text("\(value)")
+      HStack {
+        Circle()
+          .frame(width: 8, height: 8)
+          .foregroundStyle(isDragging ? Color.green : Color.gray)
+        Text("\(value)").monospacedDigit()
+      }
       SwiftUIPrecisionLevelSlider(
         value: $value,
         haptics: .init(trigger: { value in
@@ -38,7 +44,10 @@ private struct DemoContent: View {
           return nil
         }),
         range: .init(range: -45...45, transform: { $0.rounded(.toNearestOrEven) }),
-        centerLevel: { value in
+        draggingHandler: { value in
+          isDragging = value
+        },
+        centerLevel: { value, isDragging in
           HStack {
             Spacer()
             VStack {
@@ -50,7 +59,7 @@ private struct DemoContent: View {
           }
           .foregroundStyle(.tint)
         },
-        track: { value in
+        track: { value, isDragging in
           VStack {
             HStack {
               Spacer()
