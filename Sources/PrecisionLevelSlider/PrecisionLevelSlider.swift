@@ -80,7 +80,8 @@ open class PrecisionLevelSlider: UIControl {
 
   }
 
-  var onChangeValue: (Double) -> Void = { _ in }
+  public var onChangeValue: (Double) -> Void = { _ in }
+  public var onChangeDragState: (Bool) -> Void = { _ in }
 
   private let haptics: Haptics?
 
@@ -307,8 +308,16 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
     }
   }
 
+  public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    onChangeDragState(true)
+  }
+
   public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
+    onChangeDragState(false)
+
     if isContinuous == false {
+
       let oldValue = value
       value = offsetToValue()
       if oldValue != value {
@@ -318,9 +327,14 @@ extension PrecisionLevelSlider: UIScrollViewDelegate {
     }
   }
 
-  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-  {
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+
+    if decelerate == false {
+      onChangeDragState(false)
+    }
+
     if decelerate == false && isContinuous == false {
+
       let oldValue = value
       value = offsetToValue()
       if oldValue != value {
@@ -367,17 +381,20 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
   private let track: (Double) -> Track
   private let range: PrecisionLevelSlider.ValueRange
   private let haptics: PrecisionLevelSlider.Haptics?
+  private let draggingHandler: (Bool) -> Void
 
   public init(
     value: Binding<Double>,
     haptics: PrecisionLevelSlider.Haptics?,
     range: PrecisionLevelSlider.ValueRange,
+    draggingHandler: @escaping (Bool) -> Void = { _ in },
     @ViewBuilder centerLevel: @escaping (Double) -> CenterLevel,
     @ViewBuilder track: @escaping (Double) -> Track
   ) {
     self._value = value
     self.haptics = haptics
     self.centerLevel = centerLevel
+    self.draggingHandler = draggingHandler
     self.track = track
     self.range = range
   }
@@ -396,6 +413,11 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
         self.value = value
       }
     }
+
+    view.onChangeDragState = { value in
+      self.draggingHandler(value)
+    }
+
     return view
   }
 
