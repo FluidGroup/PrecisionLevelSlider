@@ -432,7 +432,10 @@ public struct SwiftUIPrecisionLevelSlider<CenterLevel: View, Track: View>: UIVie
   }
 
   public func updateUIView(_ uiView: PrecisionLevelSlider, context: Context) {
-    uiView.value = self.value
+    // Prevent from modifying during view update warnings.
+    Task { @MainActor in
+      uiView.value = self.value
+    }
   }
 
 }
