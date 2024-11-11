@@ -10,7 +10,7 @@ let package = Package(
     .library(name: "PrecisionLevelSlider", targets: ["PrecisionLevelSlider"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/FluidGroup/swiftui-Hosting", from: "1.2.0"),
+    .package(url: "https://github.com/FluidGroup/swiftui-Hosting", from: "2.0.0"),
   ],
   targets: [
     .target(
