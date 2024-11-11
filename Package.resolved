@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/FluidGroup/swiftui-Hosting",
       "state" : {
-        "revision" : "7e8eaca72eae910d6d3b6272c263c6c3a10b755c",
-        "version" : "1.2.0"
+        "revision" : "da41d5b6298b9e754936c5e114721d9acf4e83cd",
+        "version" : "2.0.0"
       }
     }
   ],
