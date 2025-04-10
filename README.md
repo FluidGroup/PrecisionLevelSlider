@@ -1,3 +1,5 @@
+> An alternative consideration is https://github.com/shima11/SteppedSlider.
+
 # PrecisionLevelSlider
 
 A slider that allows the user to select a value with a high level of precision.
