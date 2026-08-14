@@ -10,7 +10,7 @@ let package = Package(
     .library(name: "PrecisionLevelSlider", targets: ["PrecisionLevelSlider"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/ntnmrndn/swiftui-Hosting", from: "2.0.0"),
+    .package(url: "https://github.com/ntnmrndn/swiftui-Hosting", branch: "antoine/ios_17"),
   ],
   targets: [
     .target(

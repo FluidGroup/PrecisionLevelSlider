@@ -1,14 +1,15 @@
 {
+  "originHash" : "d609fac7e200f8ecc3c5d69408cb953742bbc0b160d89f939e337d003e346d20",
   "pins" : [
     {
       "identity" : "swiftui-hosting",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/FluidGroup/swiftui-Hosting",
+      "location" : "https://github.com/ntnmrndn/swiftui-Hosting",
       "state" : {
-        "revision" : "da41d5b6298b9e754936c5e114721d9acf4e83cd",
-        "version" : "2.0.0"
+        "branch" : "antoine/ios_17",
+        "revision" : "715106c422cd18f4805af0692bf76a888aa40736"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
