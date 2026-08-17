@@ -1,14 +1,15 @@
 {
+  "originHash" : "73b57fa5ecb3b3f8d03ec38b2a944d53902902be58be03e5045fdef0588d3ef1",
   "pins" : [
     {
       "identity" : "swiftui-hosting",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/FluidGroup/swiftui-Hosting",
       "state" : {
-        "revision" : "da41d5b6298b9e754936c5e114721d9acf4e83cd",
-        "version" : "2.0.0"
+        "revision" : "9714566b32f84b3edce049ca3b0df06ecd0ec0c2",
+        "version" : "3.0.0"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
